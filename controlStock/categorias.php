@@ -2,7 +2,7 @@
 include "conexion.php";
 include "sesion.php";
 include "includes/registrar.php";
-
+//comentario
     $consulta = "SELECT * FROM categorias";
 
     $resultadoConsulta = mysqli_query($conn, $consulta);
