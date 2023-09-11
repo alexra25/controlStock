@@ -1,0 +1,397 @@
+:root {
+    --azul: rgb(0, 113, 188);
+    --rojo:  rgb(193, 39, 45);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.bloque-titulo_boton {
+    width: 100%;
+    margin-top: 0;
+    display: inline-flex;
+    justify-content: end;
+    align-items: end;
+}
+
+.altu{
+    height: 100%;
+
+}
+
+.bloque-titulo_boton h2{
+    width: 100%;
+}
+
+.texto-rojo {
+    color: var(--rojo);   
+}
+
+.texto-azul {
+    color:  var(--azul);
+}
+
+/* clases globales */
+.titulo {
+    padding: 2.5px;
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 50px;
+    font-size: 28px;
+    font-weight: 300;
+}
+
+.contenido-formulario {
+    max-width: 980px;
+    display: flex;
+    flex-direction: column; /* Cambia la dirección del flex a columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    margin: auto; /* Agrega margen automático para centrar en pantalla */
+    /* height: 100vh;  Ocupa el 100% de la altura del viewport */
+}
+
+.contenedor-notificacion {
+    display: flex;
+ }
+ 
+ .contador-notificacion {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin-left: 15px;
+     background-color: var(--rojo);
+     color: white;
+     width: 30px;
+     height: 30px;
+     border-radius: 50%;
+     font-weight:lighter;
+ }
+
+.formulario {
+    text-align: end;
+    font-size: 18px;
+    font-weight: 100;
+}
+
+.formulario-label{
+    margin-right: 25px;
+}
+
+.formulario-input{
+    outline: none; /* quitar el efecto de resalto de borde cuando esta activo el input */
+    padding: 8px 20px;
+    margin-bottom: 10px;
+    width: 700px;
+    border: 1px solid black;
+}
+
+.formulario-input-orden {
+    display:none;
+}
+
+.boton-primario {
+    padding: 8px 20px;
+    min-width: 140px;
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 400;
+    transition: all 300ms;
+}
+
+.btn-primary {
+background:#e13131;
+color:#FFFFFF;
+border:0px;
+padding:16px;
+}
+
+
+.boton-primario:hover {
+    background-color: rgb(0, 90, 188);    
+}
+
+.boton-eliminar {
+    background-color: rgb(193, 39, 45);    
+    margin-right: 15px;
+}
+
+.boton-eliminar:hover {
+    background-color: rgb(170, 0, 0);    
+}
+
+.boton-titulo {
+    margin-top: 0;
+    margin-bottom: 50px;
+}
+
+.lista {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.lista-contenido {
+    display: flex;
+    border: 1px solid black;
+    border-radius: 5px;
+    list-style: none;
+    padding: 8px 20px;
+    margin-bottom: 10px;
+    justify-content:space-between;
+}
+
+.lista-contenido h3, p{
+    margin: 0;
+}
+
+.lista-contenido h3{
+    margin-top: 3px;
+    margin-bottom: 2px;
+    font-size: 18px;
+}
+
+.lista-contenido p{
+    margin-bottom: 3px;
+    font-size: 16px;
+}
+
+.lista-logo {
+    width: 30px;
+    background-image: url(../img/lapiz-editar.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.lista-logo-caja {
+    width: 30px;
+    background-image: url(../img/caja-flechas.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.contador {
+    align-items: center;
+}
+
+.contador-sumar {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/btn-mas.svg);    
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.contador-restar {
+    width: 30px;
+    height: 30px;
+    background-image: url(../img/btn-menos.svg);    
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.producto-individual {
+    width: 100%;
+    border: 1px solid black;
+}
+
+.producto-individual div, p{
+    display: flex;
+    align-items: center;
+} 
+
+/* Estilos para la cabecera y footer */
+.header {
+    height: 70px;
+    border: 1px solid black;
+    border-top: none;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    background-color: #333;
+}
+
+.header-barra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 700px;
+}
+
+.nombre-usuario {
+    text-align: right;
+    margin-right: 15px;
+    color: white;
+    font-size: 18px;
+}
+
+.logo-usuario {
+    margin-right: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--azul);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+}
+
+.iniciales-usuario {
+    font-size: 18px;
+    font-weight: lighter;
+}
+
+.header-barra input {
+    outline: none; /* quitar el efecto de resalto de borde cuando esta activo el input */
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px 20px;
+    font-size: 16px;
+    box-sizing: border-box; /* Esto asegura que el padding no aumente el ancho total del input */
+}
+
+/* contenido main */
+main {
+    display: flex;
+}
+
+/* Estilos para el navs */
+.navegacion {
+    border: 1px solid black;
+    border-top: none;
+    border-bottom: none;
+    display: flex;
+    justify-content: start;
+    flex-direction: column; /* Alinea los elementos verticalmente */
+}
+
+/* Añade un contenedor para centrar los links horizontalmente */
+
+.navContenedor {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 120px; /* Espacio entre los links y el borde superior */
+    height: 80vh;
+}
+
+.navegacion a {
+    text-decoration: none;
+    color: black;
+    font-size: 20px;
+    margin-bottom: 20px; /* Espacio entre los links */
+    transition: all 300ms;
+}
+
+.navegacion-seleccionado {
+    border-bottom: 2px solid  rgb(0, 113, 188);
+}
+
+.navegacion a:hover {
+    color: rgb(0, 113, 188);
+}
+
+/* contenido section */
+section {
+    width: 100%;
+    height: 100%;
+    margin: 0 120px;
+}
+
+/* Añade un contenedor para bordes y centrar texto */
+.footer{
+    border-top: 1px solid #000;
+    color: #fff;
+    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer p{
+    margin-top: 5px;
+    text-align: center;
+}
+
+.alerta {
+
+    max-width: 880px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    margin: 10px auto;
+    box-sizing: border-box; /* Esto asegura que el padding no aumente el ancho total del input */
+    padding: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.error {
+    background-color: rgb(193, 39, 45);    
+}
+
+.succes {
+    background-color: green;    
+}
+
+
+/* Estilos para la tabla de productos */
+
+.tabla-productos2 {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 10px;
+
+}
+
+ 
+
+.tabla-productos2 th,
+
+.tabla-productos2 td {
+
+    border: 1px solid black;
+
+    padding: 8px 20px;
+
+    text-align: center;
+
+}
+
+ 
+
+.tabla-productos2 th {
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+    background-color: #344;
+
+    color: white;
+
+}
+
+ 
+
+.tabla-productos2 td {
+
+    font-size: 16px;
+
+}
