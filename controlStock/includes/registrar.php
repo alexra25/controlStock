@@ -1,13 +1,20 @@
 <?php
-    function setRegistro($descripcion, $id_accion, $id_usuario, $conn) {
-        $consulta = "INSERT INTO registro(descripcion, id_accion, id_usuario) 
-        VALUES ('$descripcion','$id_accion','$id_usuario')";
-        $resultados = mysqli_query($conn, $consulta);
+    function setRegistro($descripcion, $id_accion, $id_usuario,$id_categoria,$id_producto, $conn) {
+
+        if(!isset($id_producto)){
+            $consulta = "INSERT INTO registro(descripcion, id_accion, id_usuario,id_producto,id_categoria) 
+        VALUES ('$descripcion','$id_accion','$id_usuario',NULL,'$id_categoria')";
+        }else{
+            $consulta = "INSERT INTO registro(descripcion, id_accion, id_usuario,id_producto,id_categoria) 
+            VALUES ('$descripcion','$id_accion','$id_usuario','$id_producto','$id_categoria')";
+        }
+    
+        $resultados = mysqli_query($conn, $consulta);           
 
 
         if ($resultados) {
             if (intval($id_accion) === 2 || intval($id_accion) === 3) {
-                header("Location: categorias.php");
+                header("Location: index.php");
                 exit();
 
             }elseif (intval($id_accion) === 4 || intval($id_accion) === 6) {

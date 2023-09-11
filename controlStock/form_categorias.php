@@ -15,7 +15,7 @@ if ($pagina === 'nueva-categoria') {
         <h2 class="titulo">
             <?php echo $titulo ?>
         </h2>
-        <a href="categorias.php">
+        <a href="index.php">
             <div class="boton-primario btn btn-primary">Volver</div>
         </a>
     </div>

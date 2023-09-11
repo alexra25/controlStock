@@ -6,11 +6,8 @@ include "includes/registrar.php";
 $errores = [];
 
     $consulta = "SELECT registro.*,
-                                CASE 
-                                     WHEN registro.id_producto IS NOT NULL THEN registro.id_producto
-                                            ELSE registro.id_categoria
-                                END AS nombre_categoria,
         productos.nombre AS nombre_producto,
+        categorias.nombre AS nombre_categoria,
         usuarios.nombre AS nombre_usuario,
         usuarios.apellido1,
         usuarios.departamento,
@@ -20,11 +17,11 @@ $errores = [];
     LEFT JOIN productos ON registro.id_producto = productos.id
     LEFT JOIN categorias ON registro.id_categoria = categorias.id
     INNER JOIN usuarios ON registro.id_usuario = usuarios.id
-    INNER JOIN accion ON registro.id_accion = accion.id
-    ORDER BY registro.fecha DESC";
+    INNER JOIN accion ON registro.id_accion = accion.id";
 
 $resultadoConsulta = mysqli_query($conn, $consulta);
 
+var_dump($resultadoConsulta->fetch_assoc());
 if (isset($_POST['orden'])) {
     if (isset($_POST['seleccionados'])) {
         $seleccionados = implode(',', $_POST['seleccionados']);
@@ -70,21 +67,26 @@ if (isset($_POST['orden'])) {
                             ?>
                             <tr>
                                 <td>
-                                    <?php echo $productos["nombre_usuario"] . " " .$productos["apellido1"]; ?>
+                                    <?php  echo $productos["nombre_usuario"] . " " .$productos["apellido1"]; ?>
                                 </td>
                                 <td>
-                                    <?php echo $productos['departamento']; ?>
+                                    <?php  echo $productos['departamento']; ?>
                                 </td>
                                 <td>
                                     <?php echo $fechaFormateada; ?>
                                 </td>
                                 <td>
-                                    <?php echo $productos['nombre_accion']; ?>
+                                   <?php  echo $productos['nombre_accion']; ?>
                                 </td>
                                 <td>
-                                    <!-- Si es categoria que muestre la categoria y si no el producto
-                                         Problema es que no podemos recoger la categoria -->
-                                    <?php echo /*"CATEGORIA " .*/ $productos['nombre_producto']; ?>
+                                    <?php 
+                                        if(isset($productos['id_producto'])){
+                                          echo  $productos['nombre_producto'] ;
+                                        }else{
+                                            echo  $productos['nombre_categoria'];
+                                        }
+                                    ?>
+                                   
                                 </td>
                             </tr>
                         <?php endwhile; ?>

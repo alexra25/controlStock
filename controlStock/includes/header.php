@@ -1,6 +1,6 @@
 <?php
 include "conexion.php";
-session_start();
+
 $dosPrimerasLetras = str_replace('.', '', $_SESSION['username']);
 $dosPrimerasLetras = substr($dosPrimerasLetras, 0, 2);
 $inicial_usuario = strtoupper($dosPrimerasLetras);
@@ -96,7 +96,7 @@ $conn->close();
         <!--Aqui va el navegador de la pagina con las secciones que tiene-->
         <nav class="navegacion bg-light">
             <div class="navContenedor">
-                <a href="categorias.php">Categorias</a>
+                <a href="index.php">Categorias</a>
 
                 <a href="productos.php">Productos</a>
 

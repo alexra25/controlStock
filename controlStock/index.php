@@ -6,8 +6,6 @@ include "includes/registrar.php";
     $consulta = "SELECT * FROM categorias";
 
     $resultadoConsulta = mysqli_query($conn, $consulta);
-
-
     // Cerrar la conexión cuando hayas terminado
     $conn->close();
 ?>
@@ -46,6 +44,6 @@ include "includes/registrar.php";
             
         </section>
     </main>
-                    
+                
         <!--Aqui va el pie de la pagina -->
         <?php include 'includes/footer.php'; ?>

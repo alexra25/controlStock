@@ -21,7 +21,8 @@ if (isset($_POST["iniciar"])) {
             $_SESSION["apellido"] = $usuario["apellido"];
             $_SESSION["id_usuario"] = $usuario["id"];
             $_SESSION["id_rol"] = $usuario["id_rol"];
-            header("Location: categorias.php");
+            $_SESSION["id"] = session_id();
+            header("Location: index.php");
             exit();
         } else {
             $error_message = "Credenciales incorrectas. Por favor, inténtalo de nuevo.";

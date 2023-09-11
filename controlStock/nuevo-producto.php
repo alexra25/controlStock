@@ -9,14 +9,15 @@
 
     
     // declarar variables de value
-    $errorres = [];
+    $errores = [];
     $nombre = '';
     $id_categoria = '';
     $cantidad = '';
     $stock_min = '';
 
+
     if (isset($_POST['insertar'])) { // Verifica si el formulario se ha enviado
-    
+     
         // Recogemos los valores donde los almacenamos y sanitizamos
         $nombre = $_POST['nombre'];
         $id_categoria = $_POST['id_categoria'];
@@ -44,11 +45,11 @@
         if(empty($errores)){
             $consulta = "INSERT INTO productos (cantidad,nombre,stock_min,id_categoria) values ('$cantidad','$nombre','$stock_min','$id_categoria')";
             $resultados = mysqli_query($conn, $consulta);
-            
+           
             $id_insertado = mysqli_insert_id($conn);
     
             if ($resultados) {
-                setRegistro($nombre, 4, $id_usuario, $conn);
+               setRegistro($nombre, 4, $id_usuario,$id_categoria,$id_insertado,$conn);
 
             } else {
                 echo "Error al eliminar la categoría: " . mysqli_error($conn);
@@ -83,7 +84,7 @@
 
 
             <div class="contenido-formulario">
-                <form class="formulario" method="post">
+                <form class="formulario" action="nuevo-producto.php" method="post">
                     <div>
                         <label class="formulario-label">Nombre:</label>
                         <input class="formulario-input" type="text" placeholder="Nombre Producto" name="nombre" value="<?php echo $nombre ?>">

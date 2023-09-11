@@ -37,7 +37,7 @@ if (isset($_POST['modificar'])) {
         $state = 1;
 
         if ($resultados) {
-            setRegistro($nombre, 1, $id_usuario, $conn);
+           //TODO=>Corregir setRegistro($nombre, 1, $id_usuario, $conn);
 
         } else {
             echo "Error al eliminar la categoría: " . mysqli_error($conn);

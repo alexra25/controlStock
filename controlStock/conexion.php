@@ -6,13 +6,13 @@
 $servername ="localhost";
 $username ="root";
 $password ="";
-$database ="Stock";
+$database ="db_stock_alacid";
 
-$conn = new mysqli($servername,$username,$password,$database);
+$conn = mysqli_connect($servername,$username,$password,$database);
 
 //verifico que se ha iniciado la conexion
-if($conn -> $connect_error){
-    die("Error de conexión: " . $conn->connect_error);
+if(!$conn){
+    die("Error de conexión: ");
 }
 
 ?>
