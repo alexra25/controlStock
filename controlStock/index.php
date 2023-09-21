@@ -2,48 +2,73 @@
 include "conexion.php";
 include "sesion.php";
 include "includes/registrar.php";
-//comentario
-    $consulta = "SELECT * FROM categorias";
 
-    $resultadoConsulta = mysqli_query($conn, $consulta);
-    // Cerrar la conexión cuando hayas terminado
-    $conn->close();
+$consulta = "SELECT * FROM categorias";
+$resultadoConsulta = mysqli_query($conn, $consulta);
+
+// Cerrar la conexión cuando hayas terminado
+$conn->close();
 ?>
 
 <!-- vinculo de header y barra de navegacion -->
 <?php include 'includes/header.php'; ?>
 
-        <!--Aqui va el contenido principal de la pagina -->
-        <section class="altu">
+<!--Aqui va el contenido principal de la pagina -->
+<section class="altu">
+    <div class="bloque-titulo_boton">
+        <h2 class="titulo">CATEGORÍAS</h2>
+        <?php if (intval($id_rol) == 1 || intval($id_rol) == 2): ?>
+            <a href="nueva-categoria.php">
+                <div class="boton-primario btn btn-primary">Añadir</div>
+            </a>
+        <?php endif; ?>
+    </div>
 
-            <div class="bloque-titulo_boton">
-                <h2 class="titulo">Categorías</h2>
-                <a href="nueva-categoria.php">
-                    <div class="boton-primario btn btn-primary">Añadir</div>
-                </a>
-            </div>
+    <table class="tabla-productos2">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <?php if (intval($id_rol) == 1 || intval($id_rol) == 2 || intval($id_rol) == 3):  ?>
+                    <th>Modificar</th>
+                <?php endif; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php while ($categoria = mysqli_fetch_assoc($resultadoConsulta)): ?>
+                <tr>
+                    <td class="categoria-cell" data-id="<?php echo $categoria['id']; ?>">
+                        <!-- Agregar una clase y atributo "data-id" para identificar la categoría -->
+                        <?php echo $categoria['nombre']; ?>
+                    </td>
+                    <td>
+                        <?php echo $categoria['descripcion']; ?>
+                    </td>
+                    <?php if (intval($id_rol) == 1 || intval($id_rol) == 2 || intval($id_rol) == 3): ?>
+                        <td><a href="modificar-categoria.php?id=<?php echo $categoria['id'] ?>"><i
+                                    class="bi bi-pencil-square" style="font-size: 2rem; color: black;"></i></a></td>
+                    <?php endif;  ?>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
 
-            <table class="tabla-productos2">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Modificar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while($categoria = mysqli_fetch_assoc($resultadoConsulta)):?>
-                        <tr>
-                            <td><?php echo $categoria['nombre']; ?></td>
-                            <td><?php echo $categoria['descripcion']; ?></td>
-                            <td><a href="modificar-categoria.php?id=<?php echo $categoria['id'] ?>"><i class="bi bi-pencil-square" style="font-size: 2rem; color: black;"></i></a></td>
-                        </tr>
-                    <?php endwhile;?>
-                </tbody>
-            </table>
-            
-        </section>
-    </main>
-                
-        <!--Aqui va el pie de la pagina -->
-        <?php include 'includes/footer.php'; ?>
+    <script>
+        // Agregar un evento de clic a las celdas de categoría
+        var categoriaCells = document.querySelectorAll(".categoria-cell");
+        categoriaCells.forEach(function (cell) {
+            cell.style.cursor = "pointer"; // Cambiar el cursor a mano al pasar el ratón
+            cell.addEventListener("click", function () {
+                // Obtener el ID de la categoría desde el atributo "data-id"
+                var idCategoria = this.getAttribute("data-id");
+
+                // Redirigir a "productos-por-categoria.php" con el ID en la URL
+                window.location.href = "productos-por-categoria.php?id=" + idCategoria;
+            });
+        });
+    </script>
+</section>
+</main>
+
+<!--Aqui va el pie de la pagina -->
+<?php include 'includes/footer.php'; ?>

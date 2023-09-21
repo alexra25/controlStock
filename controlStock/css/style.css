@@ -1,6 +1,9 @@
 :root {
     --azul: rgb(0, 113, 188);
     --rojo:  rgb(193, 39, 45);
+    --claro: white;
+    --oscuro: #333;
+    --oscuroHover: grey;
 }
 
 html, body {
@@ -8,6 +11,8 @@ html, body {
     padding: 0;
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box; /* Hack para Box Model **/
+    scroll-snap-type: y mandatory;
 }
 
 .bloque-titulo_boton {
@@ -20,7 +25,6 @@ html, body {
 
 .altu{
     height: 100%;
-
 }
 
 .bloque-titulo_boton h2{
@@ -37,12 +41,14 @@ html, body {
 
 /* clases globales */
 .titulo {
-    padding: 2.5px;
     text-align: center;
-    margin-top: 80px;
-    margin-bottom: 50px;
-    font-size: 28px;
+    margin: 2.2rem auto;
+    font-size: 1.5rem;
     font-weight: 300;
+    background-color: rgb(255, 153, 0);
+    border-radius: 10px;
+    padding: 3px;
+    color: #FFFFFF;
 }
 
 .contenido-formulario {
@@ -94,24 +100,39 @@ html, body {
     display:none;
 }
 
-.boton-primario {
-    padding: 8px 20px;
-    min-width: 140px;
-    margin-top: 15px;
-    font-size: 18px;
+.boton {
+    padding: 0.5rem 1.5rem;
+    color: var(--claro);
+    border-radius: .5rem;
+    text-align: center;
+    min-width: 6rem;
+    margin: 0.7rem 0;
+    font-size: 1rem;
     font-weight: 400;
     transition: all 300ms;
+    text-decoration: none;
+}
+
+.boton-primario {
+    background-color: var(--azul);
+}
+
+.boton-secundario {
+    background-color: var(--oscuro);
 }
 
 .btn-primary {
-background:#e13131;
-color:#FFFFFF;
-border:0px;
-padding:16px;
+    background:#e13131;
+    color:#FFFFFF;
+    border:0px;
+    padding:16px;
 }
 
-
 .boton-primario:hover {
+    background-color: rgb(0, 90, 188);    
+}
+
+.boton-secundario:hover {
     background-color: rgb(0, 90, 188);    
 }
 
@@ -209,98 +230,104 @@ padding:16px;
 
 /* Estilos para la cabecera y footer */
 .header {
-    height: 70px;
-    border: 1px solid black;
-    border-top: none;
     display: flex;
     align-items: center;
     justify-content: end;
-    background-color: #333;
+    background-color: var(--oscuro);
 }
 
-.header-barra {
+/* contenido usuario */
+.contenido-usuario {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 700px;
-}
-
-.nombre-usuario {
-    text-align: right;
-    margin-right: 15px;
-    color: white;
-    font-size: 18px;
-}
-
-.logo-usuario {
-    margin-right: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--azul);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    color: white;
+    margin: 0.7rem 1rem;
     cursor: pointer;
+    padding: 0.3rem 0.7rem;
+    transition: all 400ms;
 }
 
-.iniciales-usuario {
-    font-size: 18px;
-    font-weight: lighter;
+.contenido-usuario-enlace {
+    text-decoration: none;
 }
 
-.header-barra input {
-    outline: none; /* quitar el efecto de resalto de borde cuando esta activo el input */
-    border-radius: 5px;
-    width: 100%;
-    padding: 5px 20px;
-    font-size: 16px;
-    box-sizing: border-box; /* Esto asegura que el padding no aumente el ancho total del input */
+.contenido-usuario:hover {
+    background-color: var(--oscuroHover);
+    border-radius: 0.5rem;
+}
+
+.contenido-usuario p {
+    color: var(--claro);
+    margin: 0;
+}
+
+.contenido-usuario-logo {
+    background-color: var(--azul);
+    border-radius: 50%;
+    margin-left: 0.7rem;
+}
+
+.contenido-usuario-nombre{
+    font-size: 1rem;
+}
+
+.contenido-usuario-inicial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 1rem;
+}   
+
+/* contenido footer */
+.footer {
+    color: var(--claro);
+    padding: 0.5rem 0;
+    margin: 0;
+    background-color: var(--oscuro);
+    position: relative;
+}
+
+.footer p{
+    margin: 0;
 }
 
 /* contenido main */
 main {
+    flex-grow: 1;
     display: flex;
 }
 
 /* Estilos para el navs */
 .navegacion {
-    border: 1px solid black;
-    border-top: none;
-    border-bottom: none;
+    border-right: 0.05rem solid var(--oscuro);
     display: flex;
     justify-content: start;
     flex-direction: column; /* Alinea los elementos verticalmente */
+    height: calc(100vh - 5.5rem); 
+    opacity: 90%;
 }
 
-/* Añade un contenedor para centrar los links horizontalmente */
-
 .navContenedor {
+    flex-grow: 1; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-left: 50px;
     margin-right: 50px;
-    margin-top: 120px; /* Espacio entre los links y el borde superior */
-    height: 80vh;
 }
 
 .navegacion a {
     text-decoration: none;
-    color: black;
+    color: var(--oscuro);
     font-size: 20px;
     margin-bottom: 20px; /* Espacio entre los links */
     transition: all 300ms;
 }
 
-.navegacion-seleccionado {
-    border-bottom: 2px solid  rgb(0, 113, 188);
+.navegacion a:hover {
+    color: white;
 }
 
-.navegacion a:hover {
-    color: rgb(0, 113, 188);
-}
 
 /* contenido section */
 section {
@@ -308,45 +335,6 @@ section {
     height: 100%;
     margin: 0 120px;
 }
-
-/* Añade un contenedor para bordes y centrar texto */
-.footer{
-    border-top: 1px solid #000;
-    color: #fff;
-    padding: 15px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-}
-
-.footer p{
-    margin-top: 5px;
-    text-align: center;
-}
-
-.alerta {
-
-    max-width: 880px;
-    display: flex;
-    justify-content: center;
-    align-items: center;   
-    margin: 10px auto;
-    box-sizing: border-box; /* Esto asegura que el padding no aumente el ancho total del input */
-    padding: 5px;
-    text-align: center;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.error {
-    background-color: rgb(193, 39, 45);    
-}
-
-.succes {
-    background-color: green;    
-}
-
 
 /* Estilos para la tabla de productos */
 
@@ -356,7 +344,7 @@ section {
 
     border-collapse: collapse;
 
-    margin-top: 10px;
+    margin: 1.5rem 0;
 
 }
 
@@ -394,4 +382,87 @@ section {
 
     font-size: 16px;
 
+}
+
+@media (max-width:920px){
+    .main {
+        display: block;
+    }  
+
+    .titulo {
+        font-size: 2.2rem;
+    }
+
+    .navegacion {
+        border-bottom: 0.05rem solid var(--oscuro);
+        border-right:none;
+        height: 100%;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .navContenedor {
+        margin-top: 2rem;
+        flex-grow: 0; 
+    }
+
+    .navegacion a {
+        align-items: center;
+    }
+
+    section {
+        margin: 0 auto;
+    }
+
+    .contador-notificacion {
+        margin: 0 0.4rem;
+    }
+
+    .bloque-titulo_boton {
+        display: block;
+        align-items: center;
+    }
+
+    .boton {
+        width: 95%;
+        margin: 2rem auto;
+        font-size: 1.2rem;
+        padding: 0.7rem;
+    }
+
+    .tabla-productos2 {
+        width: 95%;
+        margin: 0 auto;
+    }
+}
+
+
+
+.alerta {
+    max-width: 880px;
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+    margin: 10px auto;
+    box-sizing: border-box; /* Esto asegura que el padding no aumente el ancho total del input */
+    padding: 5px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.error {
+    background-color: rgb(193, 39, 45);    
+}
+
+.succes {
+    background-color: green;    
+}
+
+.inicio{
+    background: url('../img/slider1.png'); 
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed;
 }

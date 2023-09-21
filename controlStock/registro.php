@@ -10,8 +10,7 @@ $errores = [];
         categorias.nombre AS nombre_categoria,
         usuarios.nombre AS nombre_usuario,
         usuarios.apellido1,
-        usuarios.departamento,
-        productos.referencia,
+        usuarios.id_departamento,
         accion.nombre_accion
     FROM registro
     LEFT JOIN productos ON registro.id_producto = productos.id
@@ -21,7 +20,12 @@ $errores = [];
 
 $resultadoConsulta = mysqli_query($conn, $consulta);
 
-var_dump($resultadoConsulta->fetch_assoc());
+$consulta2 = "SELECT usuarios.*, departamentos.departamento
+    FROM usuarios
+    INNER JOIN departamentos ON usuarios.id_departamento = departamentos.id";
+$resultadoConsulta2 = mysqli_query($conn, $consulta2);
+$nomDepa = mysqli_fetch_assoc($resultadoConsulta2);
+
 if (isset($_POST['orden'])) {
     if (isset($_POST['seleccionados'])) {
         $seleccionados = implode(',', $_POST['seleccionados']);
@@ -70,7 +74,7 @@ if (isset($_POST['orden'])) {
                                     <?php  echo $productos["nombre_usuario"] . " " .$productos["apellido1"]; ?>
                                 </td>
                                 <td>
-                                    <?php  echo $productos['departamento']; ?>
+                                    <?php  echo $nomDepa['departamento']; ?>
                                 </td>
                                 <td>
                                     <?php echo $fechaFormateada; ?>

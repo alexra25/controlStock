@@ -44,7 +44,7 @@ if (isset($_POST["iniciar"])) {
     <title>Iniciar Sesión</title>
 </head>
 
-<body class="contenido-formulario bg-light">
+<body class="contenido-formulario bg-light inicio">
 <h2 class="titulo">Iniciar Sesión</h2>
 <?php if (isset($error_message)): ?>
     <div class="alerta error">
@@ -76,5 +76,5 @@ if (isset($_POST["iniciar"])) {
         </div>
     </div>
 </div>
-<!--Aqui va el pie de la pagina -->
-<?php include 'includes/footer.php'; ?>
+</body>
+</html>

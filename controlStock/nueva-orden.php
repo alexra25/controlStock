@@ -1,7 +1,7 @@
 <?php
 include "conexion.php";
 include "sesion.php";
-include "includes/registrar.php";
+//include "includes/registrar.php";
 
 $seleccionados = $_GET['seleccionados'];
 $errores = [];
@@ -16,45 +16,46 @@ $consulta = "SELECT productos.*, categorias.nombre AS nombre_categoria FROM prod
 
 $resultadoConsulta = mysqli_query($conn, $consulta);
 
-
 if (isset($_POST['solicitar'])) {
     $cantidades = $_POST['cantidad'];
     $productos = $_POST['productos'];
+    $estados = $_POST['estados'];
+    
+
     if (isset($_POST['cantidad'])) {
         for ($i = 0; $i < count($cantidades); $i++) {
             $id_producto = $productos[$i];
             $cantidad_solicitada = $cantidades[$i];
-            $id_usuario = 11;
-            $id_estado = 2;
+            $id_estado = $estados[$i];
+            $pendiente_entrega = $cantidad_solicitada;
 
-            ini_set('display_errors', 1);
-
+            if($id_estado == 2){
+                $id_estado_producto = 3;
+                $consulta = "UPDATE productos SET id_estado = '$id_estado_producto' WHERE id = $id_producto";
+                $resultados_descontar = mysqli_query($conn, $consulta);
+            }
+            
             // Insertar en la tabla seguimiento
-            $consulta = "INSERT INTO seguimiento (cantidad, id_usuario, id_producto, id_estado)
-                        VALUES ('$cantidad_solicitada', '$id_usuario', '$id_producto', '$id_estado')";
+            $id_estado = 3;
+
+            $consulta = "INSERT INTO seguimiento (cantidad, id_usuario, id_producto, id_estado, pendiente_entrega)
+                        VALUES ('$cantidad_solicitada', '$id_usuario', '$id_producto', '$id_estado', '$pendiente_entrega')";
                         
             $resultados = mysqli_query($conn, $consulta);
-
-            /*
-            if ($resultados) {
-                header("Location: seguimiento.php");
-            } else {
-                echo "Error al registrar la solicitud: " . mysqli_error($conn);
-            }
-            */
 
         }
 
         if ($resultados) {
-            setRegistro($nombre, 7, $id_usuario, $conn);
-            exit();
+            //setRegistro($$id_estado, 7, $id_usuario, $id_producto, $id_categoria, $conn);
+            header("Location: seguimiento.php");
+
         } else {
             echo "Error al eliminar la categoría: " . mysqli_error($conn);
         }
 
-        } else {
-            $errores[] = "Indicar cantidad en todos los productos.";
-        }
+    } else {
+        $errores[] = "Indicar cantidad en todos los productos.";
+    }
 }
 
 // Cierra la conexión después de haber completado todas las operaciones
@@ -94,11 +95,8 @@ $conn->close();
 
                         <tr>
                             <th>Nombre</th>
-
                             <th>Categoría</th>
-
                             <th>Stock</th>
-
                             <th>Cantidad</th>
 
                         </tr>
@@ -124,6 +122,7 @@ $conn->close();
                                 <td>
                                     <input class="formulario-input" type="number" value="1" min="0" name="cantidad[]">
                                     <input type="hidden" name="productos[]" value="<?php echo $productos['id'] ?>">
+                                    <input type="hidden" name="estados[]" value="<?php echo $productos['id_estado'] ?>">
                                 </td>
 
                             </tr>
@@ -139,6 +138,4 @@ $conn->close();
     </main>
 
     <!--Aqui va el pie de la pagina -->
-
-        <!--Aqui va el pie de la pagina -->
         <?php include 'includes/footer.php'; ?>

@@ -8,7 +8,7 @@ $id = $_GET['id'];
 $consulta = "SELECT seguimiento.*,
             productos.nombre AS nombre_producto,
             usuarios.nombre AS nombre_usuario,
-            usuarios.departamento,
+            usuarios.id_departamento,
             productos.referencia,
             estados.nombre_estado
             FROM seguimiento
@@ -34,7 +34,7 @@ if (isset($_POST['borrar'])) {
     $consulta = "DELETE FROM seguimiento WHERE id = $id_borrar";
     $resultados = mysqli_query($conn, $consulta);
     if ($resultados) {
-        setRegistro($nombre, 10, $id_usuario, $conn);
+        //setRegistro($nombre, 10, $id_usuario, $conn);
 
     } else {
         echo "Error al eliminar la categoría: " . mysqli_error($conn);
@@ -55,7 +55,7 @@ if (isset($_POST['modificar'])) {
         $state = 2;
 
         if ($resultados) {
-            setRegistro($nombre, 10, $id_usuario, $conn);
+            //setRegistro($nombre, 10, $id_usuario, $id_categoria, $id $conn);
 
         } else {
             echo "Error al eliminar la categoría: " . mysqli_error($conn);

@@ -6,7 +6,7 @@
 $servername ="localhost";
 $username ="root";
 $password ="";
-$database ="db_stock_alacid";
+$database ="Stock";
 
 $conn = mysqli_connect($servername,$username,$password,$database);
 

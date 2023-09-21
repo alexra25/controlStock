@@ -6,35 +6,48 @@ include "includes/registrar.php";
 $consulta_categorias = "SELECT * FROM Categorias";
 $resultados_categorias = mysqli_query($conn, $consulta_categorias);
 
+$consulta_departamentos = "SELECT * FROM departamentos";
+$resultados_departamentos = mysqli_query($conn, $consulta_departamentos);
+
 $id = $_GET['id'];
+
+$consulta_cantidades ="SELECT SUM(pendiente_entrega) AS suma_pendiente_entrega
+FROM seguimiento
+WHERE id_producto = $id;";
+
+$cantidades = mysqli_query($conn, $consulta_cantidades);
+$resultado_cantidades = mysqli_fetch_assoc($cantidades);
 
 $consulta = "SELECT * FROM productos WHERE id = ${'id'}";
 $resultadoConsulta = mysqli_query($conn, $consulta);
 $producto = mysqli_fetch_assoc($resultadoConsulta);
 $state = 0;
+$pagina = 'modificar-producto';
 
 if (isset($_POST['borrar'])) {
     $id_borrar = $_POST['id'];
     $consulta = "DELETE FROM productos WHERE id = $id_borrar";
     $resultados = mysqli_query($conn, $consulta);
 
-    if ($resultados) {
-        setRegistro($nombre, 6, $id_usuario, $conn);
+    /*if ($resultados) {
+        //setRegistro($nombre, 6, $id_usuario, $conn);
 
     } else {
         echo "Error al eliminar la categoría: " . mysqli_error($conn);
-    }
+    }*/
 }
 
 $nombre_producto = $producto['nombre'];
-$categoria_producto = $producto['id_categoria'];
+$id_categoria = $producto['id_categoria'];
+$id_departamento = $producto['id_departamento'];
 $stock_producto = $producto['stock_min'];
 $cantidad_producto = $producto['cantidad'];
 
 if (isset($_POST['modificar'])) {
     $id_modificar = $_POST['id'];
     $nombre_producto = $_POST['nombre'];
-    $categoria_producto = $_POST['id_categoria'];
+    $id_categoria = $_POST['id_categoria'];
+    $id_departamento = $_POST['id_departamento'];
     $stock_producto = $_POST['stock_min'];
     $cantidad_producto = $_POST['cantidad'];
 
@@ -42,8 +55,12 @@ if (isset($_POST['modificar'])) {
         $errores[] = "Debes añadir un nombre";
     }
 
-    if (!$categoria_producto) {
+    if (!$id_categoria) {
         $errores[] = "Debes añadir una categoria";
+    }
+
+    if (!$id_departamento) {
+        $errores[] = "Debes añadir un departamento";
     }
 
     if (!$cantidad_producto) {
@@ -55,12 +72,12 @@ if (isset($_POST['modificar'])) {
     }
 
     if (empty($errores)) {
-        $consulta = "UPDATE productos SET nombre = '$nombre_producto', id_categoria = '$categoria_producto', stock_min ='$stock_producto', cantidad ='$cantidad_producto' WHERE id = $id_modificar";
+        $consulta = "UPDATE productos SET nombre = '$nombre_producto', id_categoria = '$id_categoria', stock_min ='$stock_producto', cantidad ='$cantidad_producto' WHERE id = $id_modificar";
         $resultados = mysqli_query($conn, $consulta);
         $state = 2;
 
         if ($resultados) {
-            setRegistro($nombre, 5, $id_usuario, $conn);
+            setRegistro($nombre, 5, $id_usuario,$id_categoria, $conn);
 
         } else {
             echo "Error al eliminar la categoría: " . mysqli_error($conn);
@@ -72,64 +89,9 @@ if (isset($_POST['modificar'])) {
 <!-- vinculo de header y barra de navegacion -->
 <?php include 'includes/header.php'; ?>
 
-        <section>
-            <div class="bloque-titulo_boton">
-                <h2 class="titulo">Modificar Producto</h2>
-                <a href="productos.php">
-                    <div class="boton-primario btn btn-primary">Volver</div>
-                </a>
-            </div>
+<!-- vinculo formulario -->
+<?php include 'form_productos.php'; ?>
+</main>
 
-            <?php if (intval($state) === 2): ?>
-                <div class="alerta succes">
-                    <?php echo "Producto modificado correctamente"; ?>
-                </div>
-            <?php endif; ?>
-
-            <?php foreach ($errores as $error): ?>
-                <div class="alerta error">
-                    <?php echo $error; ?>
-                </div>
-            <?php endforeach; ?>
-
-            <div class="contenido-formulario">
-                <form class="formulario" method="post">
-                    <div>
-                        <label class="formulario-label">Nombre:</label>
-                        <input class="formulario-input" type="text" name="nombre"
-                            value="<?php echo $nombre_producto ?>">
-                    </div>
-
-                    <div>
-                        <label class="formulario-label">Categoria:</label>
-                        <select class="formulario-input formulario-select" name="id_categoria">
-                            <option value="">--Seleccionar--</option>
-                            <?php while ($categoria = mysqli_fetch_assoc($resultados_categorias)): ?>
-                                <option <?php echo $categoria_producto === $categoria['id'] ? 'selected' : ''; ?>
-                                    value="<?php echo $categoria['id']; ?>"><?php echo $categoria['nombre']; ?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="formulario-label">Stock Min:</label>
-                        <input class="formulario-input" type="number" name="stock_min"
-                            value="<?php echo $stock_producto ?>">
-                    </div>
-
-                    <div>
-                        <label class="formulario-label">Cantidad:</label>
-                        <input class="formulario-input" type="number" name="cantidad"
-                            value="<?php echo $cantidad_producto ?>">
-                    </div>
-
-                    <input class="boton-primario btn btn-danger" type="submit" value="Borrar" name="borrar">
-                    <input class="boton-primario btn btn-warning" type="submit" value="Modificar" name="modificar">
-                    <input type="hidden" name="id" value="<?php echo $producto['id'] ?>">
-                </form>
-            </div>
-        </section>
-    </main>
-
-        <!--Aqui va el pie de la pagina -->
-        <?php include 'includes/footer.php'; ?>
+<!--Aqui va el pie de la pagina -->
+<?php include 'includes/footer.php'; ?>

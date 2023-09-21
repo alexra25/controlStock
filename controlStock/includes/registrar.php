@@ -1,14 +1,14 @@
 <?php
-    function setRegistro($descripcion, $id_accion, $id_usuario,$id_categoria,$id_producto, $conn) {
+    function setRegistro($descripcion, $id_accion, $id_usuario,$id_categoria,$conn) {
 
         if(!isset($id_producto)){
-            $consulta = "INSERT INTO registro(descripcion, id_accion, id_usuario,id_producto,id_categoria) 
-        VALUES ('$descripcion','$id_accion','$id_usuario',NULL,'$id_categoria')";
+            $consulta = "INSERT INTO registro(descripcion, id_accion, id_usuario,id_categoria) 
+        VALUES ('$descripcion','$id_accion','$id_usuario','$id_categoria')";
         }else{
             $consulta = "INSERT INTO registro(descripcion, id_accion, id_usuario,id_producto,id_categoria) 
             VALUES ('$descripcion','$id_accion','$id_usuario','$id_producto','$id_categoria')";
         }
-    
+        
         $resultados = mysqli_query($conn, $consulta);           
 
 

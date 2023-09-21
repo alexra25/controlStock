@@ -32,7 +32,7 @@ if (isset($_POST['insertar'])) {
         $id_categoria = mysqli_insert_id($conn);
     
         if ($resultados) {
-            setRegistro($nombre_categoria, 2, $id_usuario,$id_categoria,null, $conn);
+            setRegistro($nombre_categoria, 3, $id_usuario, $id_categoria, $conn);
 
         } else {
             echo "Error al eliminar la categoría: " . mysqli_error($conn);

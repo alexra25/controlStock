@@ -6,6 +6,10 @@ $consulta = "SELECT * FROM usuarios";
 
 $resultadoConsulta = mysqli_query($conn, $consulta);
 
+$consulta2 = "SELECT departamento FROM departamentos";
+$resultadoConsulta2 = mysqli_query($conn, $consulta2);
+$departamentos = mysqli_fetch_assoc($resultadoConsulta2);
+
 $conn->close();
 ?>
 
@@ -37,7 +41,7 @@ $conn->close();
                             <td><?php echo $usuarios['apellido1'].' '.$usuarios['apellido2'] ; ?></td>
                             <td><?php echo $usuarios['username']; ?></td>
                             <td><?php echo $usuarios['email']; ?></td>
-                            <td><?php echo $usuarios['departamento']; ?></td>
+                            <td><?php echo $departamentos['departamento']; ?></td>
                             <td><a href="modificar-usuario.php?id=<?php echo $usuarios['id'] ?>"><i class="bi bi-pencil-square" style="font-size: 2rem; color: black;"></i></a></td>
                         </tr>
                     <?php endwhile;?>

@@ -13,6 +13,7 @@ $categoria = mysqli_fetch_assoc($resultadoConsulta);
 $nombre_categoria = $categoria['nombre'];
 $descripcion_categoria = $categoria['descripcion'];
 $pagina = 'modificar-categoria';
+$id_categoria = $id;
 $errores = [];
 $state = 0;
 
@@ -37,7 +38,7 @@ if (isset($_POST['modificar'])) {
         $state = 1;
 
         if ($resultados) {
-           //TODO=>Corregir setRegistro($nombre, 1, $id_usuario, $conn);
+            setRegistro($nombre_categoria, 1, $id_usuario, $id_categoria, $conn);
 
         } else {
             echo "Error al eliminar la categoría: " . mysqli_error($conn);
@@ -51,13 +52,15 @@ if (isset($_POST['borrar'])) {
     $consulta = "DELETE FROM categorias WHERE id = $id_borrar";
     $resultados = mysqli_query($conn, $consulta);
 
-    if ($resultados) {
-        setRegistro($nombre_categoria, 3, $id_usuario, $conn);
+    /*if ($resultados) {
+        setRegistro($nombre_categoria, 3, $id_usuario, $id_categoria, $conn);
 
     } else {
         echo "Error al eliminar la categoría: " . mysqli_error($conn);
-    }
+    }*/
 }
+
+$conn->close();
 ?>
 
 <!-- vinculo de header y barra de navegacion -->

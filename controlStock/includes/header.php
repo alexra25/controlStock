@@ -31,20 +31,27 @@ $conn->close();
     <script src="./js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <script>
-    const cambiarTema = () => {
-        const body = document.querySelector("body");
-        const dlIcon = document.querySelector("#dl-icon");
+        const cambiarTema = () => {
+            const body = document.querySelector("body");
+            const dlIcon = document.querySelector("#dl-icon");
 
-        if (body.getAttribute("data-bs-theme") === "light") {
-            body.setAttribute("data-bs-theme", "dark");
-            dlIcon.setAttribute("class", "bi bi-sun-fill");
-            dlIcon.classList.remove("text-white");
-        } else {
-            body.setAttribute("data-bs-theme", "light");
-            dlIcon.setAttribute("class", "bi bi-moon-fill text-white");
+            if (body.getAttribute("data-bs-theme") === "light") {
+                body.setAttribute("data-bs-theme", "dark");
+                dlIcon.setAttribute("class", "bi bi-sun-fill");
+                dlIcon.classList.remove("text-white");
+            } else {
+                body.setAttribute("data-bs-theme", "light");
+                dlIcon.setAttribute("class", "bi bi-moon-fill text-white");
+            }
         }
-    }
-</script>
+
+    </script>
+    <style>
+        /* Estilo para ocultar inicialmente la sección de Control de Stock */
+        .control-stock {
+            display: none;
+        }
+    </style>
 
     <title>Control de stock</title>
 </head>
@@ -72,51 +79,70 @@ $conn->close();
     </svg>
     <!--Aqui va el header con el buscador-->
     <header class="header">
-        
-        <div class="nombre-usuario">
-            <p>
-                <?php echo $_SESSION['username']; ?>
-            </p>
-        </div>
-        <a href="cerrarSesion.php">
-            <div class="logo-usuario">
-                <h2 class="iniciales-usuario">
-                    <?php echo $inicial_usuario; ?>
-                </h2>
+
+        <button onclick="cambiarTema()" class="btn  -fill"><i id="dl-icon" class="bi bi-moon-fill"></i></button>
+
+        <a class="contenido-usuario-enlace" href="cerrarSesion.php">
+            <div class="contenido-usuario">
+                <p class="contenido-usuario-nombre"><?php echo $_SESSION['nombre']; ?></p>
+                <div class="contenido-usuario-logo">
+                    <p class="contenido-usuario-inicial"><?php echo $inicial_usuario; ?></p>
+                </div>            
             </div>
         </a>
-
-        <button onclick="cambiarTema()" class="btn rounded-fill"><i id="dl-icon" class="bi bi-moon-fill"></i></button>
 
     </header>
 
     <!--Aqui va el contenedor de la barra lateral y contenido principal -->
-    <main class="main">
+    <main class="main inicio">
 
         <!--Aqui va el navegador de la pagina con las secciones que tiene-->
-        <nav class="navegacion bg-light">
-            <div class="navContenedor">
-                <a href="index.php">Categorias</a>
+        <nav class="navegacion bg-secondary">
+            <button id="toggleControlStock">Control de Stock</button>
 
-                <a href="productos.php">Productos</a>
+            <section class="control-stock">
+                <div class="navContenedor">
+                    <a href="index.php">Categorias</a>
 
-                <div class="contenedor-notificacion">
-                    <a href="notificaciones.php">Notificaciones</a>
-                    
-                    <?php  if (intval($count_notificaciones) > 0): ?>
-                        <div class="contador-notificacion">
-                            <?php echo $count_notificaciones ?>
-                        </div>
+                    <a href="productos.php">Productos</a>
+
+                    <div class="contenedor-notificacion">
+                        <a href="notificaciones.php">Notificaciones</a>
+                        
+                        <?php  if (intval($count_notificaciones) > 0): ?>
+                            <div class="contador-notificacion">
+                                <?php echo $count_notificaciones ?>
+                            </div>
+                        <?php endif; ?>
+
+                    </div>
+
+                    <a href="seguimiento.php">Seguimiento</a>
+
+                    <a href="registro.php">Registro</a>
+
+                    <?php if (intval($id_rol) == 1): ?>
+                        <a href="usuarios.php">Usuarios</a>
                     <?php endif; ?>
 
+                    <?php if (intval($id_rol) == 1): ?>
+                        <a href="proveedores.php">Proveedores</a>
+                    <?php endif; ?>
                 </div>
+            </section>
+            <script>
+                // Obtener el botón y la sección de Control de Stock
+                var toggleButton = document.getElementById("toggleControlStock");
+                var controlStockSection = document.querySelector(".control-stock");
 
-                <a href="seguimiento.php">Seguimiento</a>
-
-                <a href="registro.php">Registro</a>
-
-                <?php if (intval($id_rol) == 1): ?>
-                    <a href="usuarios.php">Usuarios</a>
-                <?php endif; ?>
-            </div>
+                // Agregar un evento de clic al botón
+                toggleButton.addEventListener("click", function () {
+                    // Alternar la visibilidad de la sección de Control de Stock
+                    if (controlStockSection.style.display === "none" || controlStockSection.style.display === "") {
+                        controlStockSection.style.display = "block";
+                    } else {
+                        controlStockSection.style.display = "none";
+                    }
+                });
+            </script>
         </nav>

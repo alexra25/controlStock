@@ -1,6 +1,7 @@
 <?php
-include "conexion.php";
-
+    include "conexion.php";
+    include "sesion.php";
+    include "includes/registrar.php";
 // consultar todas las categorias
 $consulta_usuarios = "SELECT * FROM usuarios";
 $resultados_usuarios = mysqli_query($conn, $consulta_usuarios);
@@ -15,6 +16,7 @@ $apellido1 = '';
 $apellido2 = '';
 $email = '';
 $departamento = '';
+$rol = '';
 
 
 if (isset($_POST['insertar'])) { // Verifica si el formulario se ha enviado
@@ -28,6 +30,7 @@ if (isset($_POST['insertar'])) { // Verifica si el formulario se ha enviado
     $apellido2 = $_POST['apellido2'];
     $email = $_POST['email'];
     $departamento = $_POST['departamento'];
+    $rol = $_POST['rol'];
 
     // Verificacion de formulario
     if (!$username) {
@@ -58,9 +61,13 @@ if (isset($_POST['insertar'])) { // Verifica si el formulario se ha enviado
         $errores[] = "Debes añadir un departamento";
     }
 
+    if (!$rol) {
+        $errores[] = "Debes añadir un rol";
+    }
+
     // revisar el array de errores y si esta vacio lo guarda en la base de datos
     if (empty($errores)) {
-        $consulta = "username, pasword, nombre, apellido1, apellido2, email, departamento) values ('$username','$pasword','$nombre','$apellido1','$apellido2','$email','$departamento')";
+        $consulta = "INSERT INTO usuarios (username, pasword, nombre, apellido1, apellido2, email, id_rol, id_departamento) values ('$username','$pasword','$nombre','$apellido1','$apellido2','$email','$rol','$departamento')";
 
         $resultados = mysqli_query($conn, $consulta);
 
@@ -126,11 +133,21 @@ if (isset($_POST['insertar'])) { // Verifica si el formulario se ha enviado
                 <label class="formulario-label">Departamento:</label>
                 <select class="formulario-input formulario-select" name="departamento">
                     <option value="">--Seleccionar--</option>
-                    <option value="OFICINA">OFICINA</option>
-                    <option value="DIBUJO">DIBUJO</option>
-                    <option value="Oficina">TECNICO</option>
-                    <option value="CLICHES">CLICHES</option>
-                    <option value="MONTAJE">MONTAJE</option>
+                    <option value="1">OFICINA</option>
+                    <option value="2">DIBUJO</option>
+                    <option value="5">TECNICO</option>
+                    <option value="4">CLICHES</option>
+                    <option value="3">MONTAJE</option>
+                </select>
+            </div>
+            <div>
+                <label class="formulario-label">Rol:</label>
+                <select class="formulario-input formulario-select" name="rol">
+                    <option value="">--Seleccionar--</option>
+                    <option value="1">Administrador</option>
+                    <option value="2">Jefe departamento</option>
+                    <option value="3">Técnico</option>
+                    <option value="4">Operario</option>
                 </select>
             </div>
             <div>
