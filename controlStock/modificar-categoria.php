@@ -1,13 +1,16 @@
 <?php
-include "conexion.php";
 include "sesion.php";
+include 'includes/header.php';
 include "includes/registrar.php";
 
 // Recogemos el id pasado por la url.
 $id = $_GET['id'];
-$consulta = "SELECT * FROM categorias WHERE id = ${'id'}";
-$resultadoConsulta = mysqli_query($conn, $consulta);
-$categoria = mysqli_fetch_assoc($resultadoConsulta);
+$consulta = "SELECT * FROM categorias WHERE id = $id";
+
+$con = new Conexion();
+$resultadoConsulta = $con->queryAll($consulta);
+
+$categoria = $resultadoConsulta[0];
 
 // variables de la pagina
 $nombre_categoria = $categoria['nombre'];
@@ -34,14 +37,14 @@ if (isset($_POST['modificar'])) {
 
     if (empty($errores)) {
         $consulta = "UPDATE categorias SET nombre = '$nombre_categoria', descripcion = '$descripcion_categoria' WHERE id = $id_modificar";
-        $resultados = mysqli_query($conn, $consulta);
+        $resultados = $con->query($consulta);
         $state = 1;
 
         if ($resultados) {
-            setRegistro($nombre_categoria, 1, $id_usuario, $id_categoria, $conn);
+            setRegistro($nombre_categoria, 1, $id_usuario, $id_categoria, $con);
 
         } else {
-            echo "Error al eliminar la categoría: " . mysqli_error($conn);
+            echo "Error al eliminar la categoría: ";
         }
     }
 }
@@ -50,7 +53,8 @@ if (isset($_POST['modificar'])) {
 if (isset($_POST['borrar'])) {
     $id_borrar = $_POST['id'];
     $consulta = "DELETE FROM categorias WHERE id = $id_borrar";
-    $resultados = mysqli_query($conn, $consulta);
+
+    $resultados =  $con->queryAll($consulta);
 
     /*if ($resultados) {
         setRegistro($nombre_categoria, 3, $id_usuario, $id_categoria, $conn);
@@ -60,11 +64,10 @@ if (isset($_POST['borrar'])) {
     }*/
 }
 
-$conn->close();
+
 ?>
 
-<!-- vinculo de header y barra de navegacion -->
-<?php include 'includes/header.php'; ?>
+
 
 <!-- vinculo de form_categorias -->
 <?php include 'form_categorias.php'; ?>

@@ -1,17 +1,14 @@
 <?php
-include "conexion.php";
 include "sesion.php";
+include "includes/header.php";
+
 include "includes/registrar.php";
 
-$consulta = "SELECT * FROM categorias";
-$resultadoConsulta = mysqli_query($conn, $consulta);
-
-// Cerrar la conexión cuando hayas terminado
-$conn->close();
+$con = new Conexion();
+$resultadoConsulta = $con->queryAll("SELECT * FROM categorias");
 ?>
 
 <!-- vinculo de header y barra de navegacion -->
-<?php include 'includes/header.php'; ?>
 
 <!--Aqui va el contenido principal de la pagina -->
 <section class="altu">
@@ -35,7 +32,7 @@ $conn->close();
             </tr>
         </thead>
         <tbody>
-            <?php while ($categoria = mysqli_fetch_assoc($resultadoConsulta)): ?>
+            <?php foreach($resultadoConsulta as $categoria){ ?>
                 <tr>
                     <td class="categoria-cell" data-id="<?php echo $categoria['id']; ?>">
                         <!-- Agregar una clase y atributo "data-id" para identificar la categoría -->
@@ -49,7 +46,7 @@ $conn->close();
                                     class="bi bi-pencil-square" style="font-size: 2rem; color: black;"></i></a></td>
                     <?php endif;  ?>
                 </tr>
-            <?php endwhile; ?>
+            <?php } ?>
         </tbody>
     </table>
 

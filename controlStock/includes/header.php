@@ -1,21 +1,18 @@
 <?php
-include "conexion.php";
-
+require "conexion.php";
 $dosPrimerasLetras = str_replace('.', '', $_SESSION['username']);
 $dosPrimerasLetras = substr($dosPrimerasLetras, 0, 2);
 $inicial_usuario = strtoupper($dosPrimerasLetras);
 
-
+$con = new Conexion();
+$resultadoNotificaciones = $con->queryAll("SELECT productos.*, categorias.nombre AS nombre_categoria 
+FROM productos
+INNER JOIN categorias ON productos.id_categoria = categorias.id
+WHERE productos.cantidad <= productos.stock_min");
 //$consulta = "SELECT * FROM productos";
-$consulta = "SELECT productos.*, categorias.nombre AS nombre_categoria 
-            FROM productos
-            INNER JOIN categorias ON productos.id_categoria = categorias.id
-            WHERE productos.cantidad <= productos.stock_min";
 
-$resultadoNotificaciones = mysqli_query($conn, $consulta);
-$count_notificaciones = mysqli_num_rows($resultadoNotificaciones);
+$count_notificaciones = count($resultadoNotificaciones);
 
-$conn->close();
 
 ?>
 

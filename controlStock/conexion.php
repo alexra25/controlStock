@@ -1,18 +1,47 @@
 <?php
 
-//Aqui hacemos la conexion a la base de datos
+class Conexion{
 
-//variables de conexion
-$servername ="localhost";
-$username ="root";
-$password ="";
-$database ="Stock";
+    private $cont;
+    public function __construct()
+    {
+       //variables de conexion
+       try{
+        $username ="root";
+        $password ="";
+        $dsn ="mysql:host=localhost;dbname=db_stock_alacid";
 
-$conn = mysqli_connect($servername,$username,$password,$database);
+        $this->cont =  new PDO($dsn,$username,$password);
+        //verifico que se ha iniciado la conexion
+       
+       }catch(PDOException $e){
+            echo $e->getMessage();
+       }
+       
+    }
 
-//verifico que se ha iniciado la conexion
-if(!$conn){
-    die("Error de conexión: ");
+
+    public function queryAll(string $query) : array
+    {
+            $consulta = $this->cont->query($query);
+            if(!$consulta){
+                die("Error en la consulta ".$this->cont->errorInfo());
+            }
+            $resultados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+            return $resultados;
+    }
+
+
+    public function query(string $query) : bool
+    {
+            $consulta = $this->cont->query($query);
+            if(!$consulta){
+                die("Error en la consulta ".$this->cont->errorInfo());
+            }
+        
+            return true;
+    }
+
 }
 
 ?>
